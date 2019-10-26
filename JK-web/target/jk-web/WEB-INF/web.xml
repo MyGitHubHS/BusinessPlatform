@@ -1,0 +1,76 @@
+<!DOCTYPE web-app PUBLIC
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+    <display-name>Archetype Created Web Application</display-name>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/applicationContext*.xml</param-value>
+    </context-param>
+
+    <!--配置字符过滤-->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <!--配置RestFul支持-->
+    <filter>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+    </filter>
+
+    <!--配置字符过滤映射-->
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <!--配置RestFul支持映射-->
+    <filter-mapping>
+        <filter-name>hiddenHttpMethodFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--配置Spring监听器：用于加载Spring配置文件-->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <!--配置前端控制器-->
+    <servlet>
+        <servlet-name>springmvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:spring-mvc.xml</param-value>
+        </init-param>
+        <!--配置服务器启动时加载dispatcher-->
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <!--配置druid的监控-->
+    <servlet>
+        <servlet-name>druidStatView</servlet-name>
+        <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+    </servlet>
+    <!--配置前端控制器映射-->
+    <servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <!--不能使用 /*-->
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <!--监控页面映射地址-->
+    <servlet-mapping>
+        <servlet-name>druidStatView</servlet-name>
+        <!--http://localhost:8080/druid-->
+        <url-pattern>/druid/*</url-pattern>
+    </servlet-mapping>
+
+    <!--配置默认页面：http://localhost:8080/-->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

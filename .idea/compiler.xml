@@ -7,9 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="JK-service" />
-        <module name="JK-entity" />
-        <module name="JK-web" />
+        <module name="JK-utils" />
         <module name="JK-dao" />
+        <module name="JK-web" />
+        <module name="JK-entity" />
       </profile>
     </annotationProcessing>
   </component>

@@ -5,11 +5,14 @@ import com.yaorange.entity.User;
 import com.yaorange.dao.UserDao;
 
 import org.springframework.stereotype.Service;
+import utils.Pagination;
 
 
 import javax.annotation.Resource;
-import java.util.HashSet;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 /**
  * @description: 业务层实现类
@@ -23,10 +26,30 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserDao userDao;
 
-    private Set HashSet=new HashSet();
+    @Override
+    public void deleteUser(String[] id) {
+        userDao.deleteUser(id);
+    }
 
     @Override
-    public User login(User user) {
-        return userDao.selectUser(user);
+    public void updataUser(User user) {
+        userDao.updataUser(user);
+    }
+
+    @Override
+    public void addUser(User user) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String format = simpleDateFormat.format(new Date());
+        try {
+            Date parse = simpleDateFormat.parse(format);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        userDao.addUser(user);
+    }
+
+    @Override
+    public Pagination getPage(Integer pageNo, Integer pageSize, String likeName) {
+      return userDao.getPage(pageNo,pageSize,likeName);
     }
 }
